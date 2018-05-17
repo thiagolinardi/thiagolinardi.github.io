@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Handlebars Partials Example</title>
+  </head>
+  <body>
+
+    <h1>Meu Teste</h1>
+
+    <div id="conteudo">
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
+    
+    <script id="teste-template" type="text/x-handlebars-template">
+
+        {{#each tiposDeParametro}}
+            {{> partial}}
+        {{/each}}
+
+    </script>
+
+    <script id="partial" type="text/x-handlebars-template">   
+        <label>{{rotulo}}</label>
+        <input maxlength="{{tamanho}}" value="{{tipo}}" />
+    </script>
+
+    <script type="text/javascript">
+    
+        $(document).ready(function(){
+            
+        var data = {
+          controles: [
+            { "rotulo": "Nome", "tamanho": 5, "tipo": "texto" },
+            { "rotulo": "Sobrenome","tamanho": 10, "tipo": "check" },
+            { "rotulo": "Idade", "tamanho": 2, "tipo": "texto" },
+          ]
+        };
+
+
+var json = {"_tipoDeFormaDeCarga":"Boleto","tipoDeFormaDeCarga":0,"tiposDeParametro":[{"codigo":2,"nome":"Chave de Acesso","rotulo":"Chave de Acesso","tipoDeDado":0,"tamanho":50},{"codigo":3,"nome":"Senha","rotulo":"Senha","tipoDeDado":0,"tamanho":50},{"codigo":4,"nome":"Instruções de Pagamento","rotulo":"Inst. de Pagamento","tipoDeDado":0,"tamanho":250}]};
+        
+
+            var template = Handlebars.compile($("#teste-template").html());
+            Handlebars.registerPartial("partial", $("#partial").html());
+
+            $('#conteudo').html(template(json));
+
+        });
+
+    </script>
+
+  </body>
+</html>
